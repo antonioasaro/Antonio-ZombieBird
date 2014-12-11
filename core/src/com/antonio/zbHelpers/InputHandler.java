@@ -50,4 +50,5 @@ public class InputHandler implements InputProcessor {
 	public boolean scrolled(int amount) {
 		return false;
 	}
+	
 }
