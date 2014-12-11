@@ -2,6 +2,7 @@ package com.antonio.screens;
 
 import com.antonio.gameworld.GameRenderer;
 import com.antonio.gameworld.GameWorld;
+import com.antonio.zbHelpers.InputHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,9 +13,16 @@ public class GameScreen implements Screen {
 	private GameRenderer renderer;
 	
 	public GameScreen () {
-		Gdx.app.log("GameScreen", "Attached");
-		world = new GameWorld();
+	    float screenWidth = Gdx.graphics.getWidth();
+	    float screenHeight = Gdx.graphics.getHeight();
+	    float gameWidth = 136;
+	    float gameHeight = screenHeight / (screenWidth / gameWidth);
+	    int midPointY = (int) (gameHeight / 2);
+	    
+		world = new GameWorld(midPointY);
 		renderer = new GameRenderer(world);
+		
+	    Gdx.input.setInputProcessor(new InputHandler(world.getBird()));		
 	}
 	
 	@Override
@@ -25,31 +33,25 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		Gdx.app.log("GameScreen", "Resizing");
 	}
 
 	@Override
 	public void show() {
-		Gdx.app.log("GameScreen", "Show called");
 	}
 
 	@Override
 	public void hide() {
-		Gdx.app.log("GameScreen", "Hide called");
 	}
 
 	@Override
 	public void pause() {
-		Gdx.app.log("GameScreen", "Pause called");
 	}
 
 	@Override
 	public void resume() {
-		Gdx.app.log("GameScreen", "Resume called");
 	}
 
 	@Override
 	public void dispose() {
 	}
-
 }
