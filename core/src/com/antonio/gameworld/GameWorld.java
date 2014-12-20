@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 public class GameWorld {
 	
 	public enum GameState {
-	    READY, RUNNING, GAMEOVER, HIGHSCORE
+	    MENU, READY, RUNNING, GAMEOVER, HIGHSCORE
 	}
 	    
     private Bird bird;
@@ -19,18 +19,22 @@ public class GameWorld {
     private int score = 0;
     private GameState currentState;
     public int midPointY;
+    private float runTime = 0;
 
     public GameWorld(int midPointY) {
+        currentState = GameState.MENU;
+        this.midPointY = midPointY;
     	bird = new Bird(33, midPointY - 5, 17, 12);   
         scroller = new ScrollHandler(this, midPointY + 66);
         ground = new Rectangle(0, midPointY + 66, 136, 11);
-        currentState = GameState.READY;
-        this.midPointY = midPointY;
     }
 
     public void update(float delta) {
+    	runTime += delta;
+    	
         switch (currentState) {
         case READY:
+        case MENU: 
             updateReady(delta);
             break;
         case RUNNING:
@@ -42,9 +46,14 @@ public class GameWorld {
     }
 
     private void updateReady(float delta) {
+    	bird.updateReady(runTime);
+        scroller.updateReady(delta);
     }
 
     public void updateRunning(float delta) {
+    	if (delta > .15f) {
+    		delta = .15f;
+    	}
     	bird.update(delta);
     	scroller.update(delta);
     	
@@ -68,13 +77,34 @@ public class GameWorld {
  
     }
 
-    public boolean isReady() {
-        return currentState == GameState.READY;
+    public Bird getBird() {
+    	return bird;
+    }
+    
+    public int getMidPointY() {
+        return midPointY;
+    }
+    
+    public ScrollHandler getScroller() {
+    	return scroller;
+    }
+    
+    public int getScore() {
+          return score;
     }
 
+    public void addScore(int increment) {
+        score += increment;
+    }
+   
     public void start() {
         currentState = GameState.RUNNING;
     }    
+ 
+    public void ready() {
+        currentState = GameState.READY;
+    }
+    
     public void restart() {
         currentState = GameState.READY;
         score = 0;
@@ -83,6 +113,10 @@ public class GameWorld {
         currentState = GameState.READY;
     }
     
+    public boolean isReady() {
+        return currentState == GameState.READY;
+    }
+
     public boolean isGameOver() {
         return currentState == GameState.GAMEOVER;
     }
@@ -91,20 +125,12 @@ public class GameWorld {
         return currentState == GameState.HIGHSCORE;
     }
     
-    public Bird getBird() {
-    	return bird;
-    }
-    
-    public ScrollHandler getScroller() {
-        return scroller;
-    }
-    
-    public int getScore() {
-        return score;
+    public boolean isMenu() {
+        return currentState == GameState.MENU;
     }
 
-    public void addScore(int increment) {
-        score += increment;
+    public boolean isRunning() {
+        return currentState == GameState.RUNNING;
     }
-    
+ 
 }

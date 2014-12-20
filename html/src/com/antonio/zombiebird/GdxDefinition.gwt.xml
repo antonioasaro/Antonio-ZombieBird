@@ -8,4 +8,5 @@
 	<entry-point class='com.antonio.zombiebird.client.HtmlLauncher' />
 	
 	<set-configuration-property name="gdx.assetpath" value="../android/assets" />
+	<inherits name='aurelienribon.tweenengine'/>
 </module>
