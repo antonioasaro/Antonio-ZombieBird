@@ -1,13 +1,16 @@
 package com.antonio.zbHelpers;
 
 import com.antonio.gameobjects.Bird;
+import com.antonio.gameworld.GameWorld;
 import com.badlogic.gdx.InputProcessor;
 
 public class InputHandler implements InputProcessor {
+	private GameWorld myWorld;
 	private Bird myBird;
 	
-	public InputHandler(Bird bird) {
-		   myBird = bird;
+	public InputHandler(GameWorld myWorld) {
+		this.myWorld = myWorld;
+		myBird = myWorld.getBird();
 	}
 
 	@Override
@@ -27,9 +30,15 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-	    myBird.onClick();
-		return true;
-	}
+        if (myWorld.isReady()) {
+            myWorld.start();
+        }
+        myBird.onClick();
+        if (myWorld.isGameOver() || myWorld.isHighScore()) {
+            myWorld.restart();
+        }
+        return true;
+    }
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {

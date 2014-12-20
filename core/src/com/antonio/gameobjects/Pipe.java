@@ -25,7 +25,12 @@ public class Pipe extends Scrollable {
         barDown = new Rectangle();
         this.groundY = groundY;
     }
-    
+
+    public void onRestart(float x, float scrollSpeed) {
+        velocity.x = scrollSpeed;
+        reset(x);
+    }
+
     @Override
     public void update(float delta) {
         super.update(delta);
