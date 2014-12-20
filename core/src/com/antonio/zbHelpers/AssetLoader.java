@@ -25,7 +25,6 @@ public class AssetLoader {
         logoTexture = new Texture(Gdx.files.internal("logo.png"));
         logoTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         logo = new TextureRegion(logoTexture, 0, 0, 512, 114);
-
     	texture = new Texture(Gdx.files.internal("texture.png"));
     	texture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
         
@@ -35,7 +34,6 @@ public class AssetLoader {
         playButtonDown.flip(false, true);
         zbLogo = new TextureRegion(texture, 0, 55, 135, 24);
         zbLogo.flip(false, true);
-
     	
     	bg = new TextureRegion(texture, 0, 0, 136, 43);
     	bg.flip(false, true);

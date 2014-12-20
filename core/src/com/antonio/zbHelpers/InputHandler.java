@@ -1,6 +1,7 @@
 package com.antonio.zbHelpers;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import com.antonio.gameobjects.Bird;
 import com.antonio.gameworld.GameWorld;
@@ -9,39 +10,35 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 
 public class InputHandler implements InputProcessor {
-	private GameWorld myWorld;
 	private Bird myBird;
-	
+	private GameWorld myWorld;
 	private List<SimpleButton> menuButtons;
     private SimpleButton playButton;
     private float scaleFactorX;
     private float scaleFactorY;
-
 	
 	public InputHandler(GameWorld myWorld, float scaleFactorX,
             float scaleFactorY) {
+
 		this.myWorld = myWorld;
 		myBird = myWorld.getBird();
-		
         int midPointY = myWorld.getMidPointY();
-
         this.scaleFactorX = scaleFactorX;
         this.scaleFactorY = scaleFactorY;
-
+        
         menuButtons = new ArrayList<SimpleButton>();
         playButton = new SimpleButton(
                 136 / 2 - (AssetLoader.playButtonUp.getRegionWidth() / 2),
                 midPointY + 50, 29, 16, AssetLoader.playButtonUp,
                 AssetLoader.playButtonDown);
         menuButtons.add(playButton);
-
 	}
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 	    screenX = scaleX(screenX);
 	    screenY = scaleY(screenY);
-	    System.out.println(screenX + " " + screenY);
+//	    System.out.println(screenX + " " + screenY);
 	    if (myWorld.isMenu()) {
 	        playButton.isTouchDown(screenX, screenY);
 	    } else if (myWorld.isReady()) {

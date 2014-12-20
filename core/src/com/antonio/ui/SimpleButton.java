@@ -21,7 +21,6 @@ public class SimpleButton {
         this.buttonDown = buttonDown;
 
         bounds = new Rectangle(x, y, width, height);
-
     }
 
     public boolean isClicked(int screenX, int screenY) {
@@ -37,12 +36,10 @@ public class SimpleButton {
     }
 
     public boolean isTouchDown(int screenX, int screenY) {
-
         if (bounds.contains(screenX, screenY)) {
             isPressed = true;
             return true;
         }
-
         return false;
     }
 
@@ -54,6 +51,5 @@ public class SimpleButton {
         isPressed = false;
         return false;
     }
-
 
 }

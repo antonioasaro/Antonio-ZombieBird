@@ -26,6 +26,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class GameRenderer {
 
+	private static final List<SimpleButton> NULL = null;
 	private Bird bird;
 	private TextureRegion bg, grass;
 	private Animation birdAnimation; 
@@ -159,9 +160,9 @@ public class GameRenderer {
 	    batcher.draw(AssetLoader.zbLogo, 136 / 2 - 56, midPointY - 50,
 	            AssetLoader.zbLogo.getRegionWidth() / 1.2f,
 	            AssetLoader.zbLogo.getRegionHeight() / 1.2f);
-	    for (SimpleButton button : menuButtons) {
-	            button.draw(batcher);
-	    }
+	    batcher.draw(AssetLoader.playButtonUp, 136 / 2 - (AssetLoader.playButtonUp.getRegionWidth() / 2), midPointY + 50,
+	            AssetLoader.playButtonUp.getRegionWidth() / 1.2f,
+	            AssetLoader.playButtonUp.getRegionHeight() / 1.2f);
 	}
 
 	private void drawScore() {
@@ -205,18 +206,33 @@ public class GameRenderer {
             drawBird(runTime);
             drawScore();
         } else if (myWorld.isReady()) {
+//    	    System.out.println("draw IsReady");
             drawBird(runTime);
             drawScore();
         } else if (myWorld.isMenu()) {
+//    	    System.out.println("draw Menu");
             drawBirdCentered(runTime);
             drawMenuUI();
         } else if (myWorld.isGameOver()) {
+//    	    System.out.println("draw Game Over");
             drawBird(runTime);
             drawScore();
+            AssetLoader.shadow.draw(batcher, "Try again?", 23, 56);
+            AssetLoader.font.draw(batcher, "Try again?", 22, 55);
+            AssetLoader.shadow.draw(batcher, "High Score:", 23, 106);
+            AssetLoader.font.draw(batcher, "High Score:", 22, 105);
+            String highScore = AssetLoader.getHighScore() + "";
+            AssetLoader.shadow.draw(batcher, highScore, (136 / 2)
+                    - (3 * highScore.length()), 128);
+            AssetLoader.font.draw(batcher, highScore, (136 / 2)
+                    - (3 * highScore.length() - 1), 127);       
         } else if (myWorld.isHighScore()) {
+//    	    System.out.println("draw HighScore");
             drawBird(runTime);
             drawScore();
-	        }
+            AssetLoader.shadow.draw(batcher, "High Score!!", 23, 56);
+            AssetLoader.font.draw(batcher, "High Score!!", 22, 55);
+        }
 
         batcher.end();
         drawTransition(delta);
